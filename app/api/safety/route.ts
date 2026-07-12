@@ -14,7 +14,7 @@ async function handler(req: NextRequest) {
   catch (e: any) { return jsonError("safety failed: " + (e?.message || "unknown"), 502); }
 }
 
-export const POST = makePaidPost("safety", handler, {
+export const { GET, POST } = makePaidPost("safety", handler, {
   description: "Rug/safety check for an EVM meme token via GoPlus: honeypot, sellability, buy/sell tax, owner privileges (mint, blacklist, pause, reclaim ownership), proxy, source verification. Returns GO/CAUTION/AVOID. Body: { token, chain }.",
   input: { token: "0x...", chain: "base" },
   inputSchema: { properties: { token: { type: "string", description: "Token contract (0x...)." }, chain: { type: "string", description: "eth, bnb, base." } }, required: ["token", "chain"] },

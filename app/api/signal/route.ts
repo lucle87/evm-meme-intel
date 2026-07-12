@@ -14,7 +14,7 @@ async function handler(req: NextRequest) {
   catch (e: any) { return jsonError("signal failed: " + (e?.message || "unknown"), 502); }
 }
 
-export const POST = makePaidPost("signal", handler, {
+export const { GET, POST } = makePaidPost("signal", handler, {
   description: "Composite meme signal: combines safety + holder concentration + liquidity + buy/sell flow into a SAFETY-GATED verdict (GO/CAUTION/AVOID) plus a separate momentum bias, with a transparent factor breakdown and risk flags. Decision-support, not financial advice. Body: { token, chain }.",
   input: { token: "0x...", chain: "base" },
   inputSchema: { properties: { token: { type: "string", description: "Token contract (0x...)." }, chain: { type: "string", description: "eth, bnb, base." } }, required: ["token", "chain"] },

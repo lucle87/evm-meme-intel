@@ -14,7 +14,7 @@ async function handler(req: NextRequest) {
   catch (e: any) { return jsonError("momentum failed: " + (e?.message || "unknown"), 502); }
 }
 
-export const POST = makePaidPost("momentum", handler, {
+export const { GET, POST } = makePaidPost("momentum", handler, {
   description: "Real-time momentum/activity for an EVM token from DexScreener: price change 5m/1h/6h/24h, volume, 24h buy/sell ratio, liquidity, pair age, socials. Shows recent flow, NOT a price prediction. Body: { token, chain }.",
   input: { token: "0x...", chain: "base" },
   inputSchema: { properties: { token: { type: "string", description: "Token contract (0x...)." }, chain: { type: "string", description: "eth, bnb, base." } }, required: ["token", "chain"] },

@@ -14,7 +14,7 @@ async function handler(req: NextRequest) {
   catch (e: any) { return jsonError("Discover failed: " + (e?.message || "unknown"), 502); }
 }
 
-export const POST = makePaidPost("discover", handler, {
+export const { GET, POST } = makePaidPost("discover", handler, {
   description: "Discover newly surfaced meme tokens on an EVM chain (eth, bnb, base) from DexScreener boosted (PAID-promoted) and newly profiled tokens, enriched with price, liquidity, and volume. A discovery starting point; always check /api/safety and /api/holders before trading. Body: { chain, limit? }.",
   input: { chain: "base", limit: 10 },
   inputSchema: { properties: { chain: { type: "string", description: "eth, bnb, base." }, limit: { type: "number", description: "Max tokens (default 10, max 15)." } }, required: ["chain"] },

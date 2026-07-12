@@ -44,13 +44,22 @@ export function makePaidPost(key: string, handler: Handler, d: Discovery) {
     server
   );
 
-  return async function POST(req: NextRequest, ctx: any) {
+  const POST = async function POST(req: NextRequest, ctx: any) {
     const preview = req.nextUrl.searchParams.get("preview");
     if (preview && process.env.PREVIEW_KEY && preview === process.env.PREVIEW_KEY) {
       return handler(req);
     }
     return (paid as any)(req, ctx);
   };
+
+  // GET: chi de discovery crawler (x402scan, 402 Index) probe thay 402 payment challenge.
+  // withX402 tra 402 khi chua co payment, bat ke method -> crawler nhan di4 duoc endpoint x402.
+  // Agent that su goi bang POST. GET khong chay handler that.
+  const GET = async function GET(req: NextRequest, ctx: any) {
+    return (paid as any)(req, ctx);
+  };
+
+  return { GET, POST };
 }
 
 // Doc body JSON an toan.
